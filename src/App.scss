@@ -58,6 +58,7 @@
 
       .item-description {
         display: inline-block;
+        overflow: hidden;
         height: 1em;
         width: 45%;
         padding: 3px 0 3px 7px;
@@ -69,7 +70,7 @@
       .item-code {
         display: inline-block;
         height: 1em;
-        width: 29%;
+        width: 3em;
         padding: 3px 0 3px 7px;
         margin-right: 10px;
         border-radius: 8px;
@@ -79,7 +80,7 @@
       .item-value {
         display: inline-block;
         height: 1em;
-        width: 29%;
+        width: 4em;
         padding: 3px 0 3px 7px;
         margin-right: 10px;
         border-radius: 8px;

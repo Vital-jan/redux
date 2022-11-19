@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import "./App.scss";
 import axios from "axios";
 
-const getJson = async () => {
+const getJson = async (setData) => {
   await axios
-    .post("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json")
+    .get("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json")
     .then((resp) => {
       if (resp.data) {
+        setData(resp.data);
       } else console.log("no data");
     })
     .catch((err) => {
@@ -16,12 +17,14 @@ const getJson = async () => {
 
 function App() {
   const [admin, setAdmin] = useState(false); // admin mode
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    getJson();
+    getJson(setData);
   }, []);
 
   console.log("render");
+  if (!data.length) return null;
   return (
     <div className="App">
       <div className="header">
@@ -30,7 +33,7 @@ function App() {
           <Admin admin={admin} setAdmin={setAdmin} />
         </div>
       </div>
-      <Main admin={admin} />
+      <Main admin={admin} data={data} />
     </div>
   );
 }
@@ -71,14 +74,33 @@ const Admin = (props) => {
 };
 
 const Main = (props) => {
+  console.log(props.data);
   // main section
-  return <div className="main">Main</div>;
+  let components = [];
+  for (let i = 0; i < 5; i++) {
+    components.push(
+      <Item
+        admin={props.admin}
+        description={props.data[i].txt}
+        code={props.data[i].cc}
+        rate={props.data[i].rate}
+      />
+    );
+    console.log(props.data[i]);
+  }
+  return <div className="main">{components}</div>;
 };
 
 const Item = (props) => {
   const [description, setDescription] = useState(props.description);
   const [code, setCode] = useState(props.code);
-  const [value, setValue] = useState(props.value);
+  const [rate, setRate] = useState(props.rate);
+  const [active, setActive] = useState(false);
+
+  const Active = (props) => {
+    if (!props.active) return null;
+    return <span>(!)</span>;
+  };
 
   if (!props.admin) {
     // user mode:
@@ -86,31 +108,28 @@ const Item = (props) => {
       <div className="item">
         <span className="item-description"> {description}&nbsp;</span>
         <span className="item-code">{code}&nbsp;</span>
-        <span className="item-value">{value}&nbsp;</span>
+        <span className="item-value">{rate}&nbsp;</span>
       </div>
     );
   }
   if (props.admin) {
     const up =
       +props.id > 0 ? (
-        <span
-          className="up"
-          onClick={(e) => {
-            props.shift(props.id);
-            props.reload();
-          }}
-        >
+        <span className="up" onClick={(e) => {}}>
           &uarr;
         </span>
       ) : null;
     return (
-      <div className="ip-edit-item">
+      <div className="item-edit">
+        <Active active={active} />
         <input
           className="input"
-          type="text"
           value={description}
-          onChange={(e) => {
-            setDescription(e.target.value);
+          onBlur={(e) => {
+            setActive(true);
+          }}
+          onFocusOut={(e) => {
+            setActive(false);
           }}
         />
         <input
@@ -124,9 +143,9 @@ const Item = (props) => {
         <input
           className="input"
           type="text"
-          value={value}
+          value={rate}
           onChange={(e) => {
-            setValue(e.target.value);
+            setRate(e.target.value);
           }}
         />
         {up}
