@@ -56,60 +56,92 @@
       margin: 5px 0;
       height: 1.5em;
 
-      .item-description {
+      .item-col {
         display: inline-block;
         overflow: hidden;
         height: 1em;
-        width: 45%;
         padding: 3px 0 3px 7px;
         margin-right: 10px;
         border-radius: 8px;
         background-color: rgb(201, 211, 224);
-      }
 
-      .item-code {
-        display: inline-block;
-        height: 1em;
-        width: 3em;
-        padding: 3px 0 3px 7px;
-        margin-right: 10px;
-        border-radius: 8px;
-        background-color: rgb(201, 211, 224);
-      }
+        &.description {
+          width: 45%;
+        }
 
-      .item-value {
-        display: inline-block;
-        height: 1em;
-        width: 4em;
-        padding: 3px 0 3px 7px;
-        margin-right: 10px;
-        border-radius: 8px;
-        background-color: rgb(201, 211, 224);
+        &.code {
+          width: 3em;
+        }
+
+        &.rate {
+          width: 4em;
+        }
+
+        &.my-rate {
+          width: 4em;
+        }
       }
     }
 
     .item-edit {
+
+      .select {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        vertical-align: middle;
+        border-radius: 50%;
+        border: 1px solid black;
+        margin-right: 5px;
+        cursor: pointer;
+
+        &.active {
+          background-color: blue;
+        }
+      }
 
       .input {
         display: inline-block;
         width: 45%;
         padding: 1px 2px;
         margin-right: 5px;
+        pointer-events: none;
+
+        &.description {
+          width: 30%;
+        }
+
+        &.code {
+          width: 3em;
+        }
+
+        &.rate {
+          width: 4em;
+        }
+
+        &.my-rate {
+          width: 4em;
+          pointer-events: all;
+        }
+
       }
 
-      .up {
-        background-color: rgb(201, 211, 224);
+      .enable {
+        background-color: green;
+        color:white;
         border-radius: 50%;
         text-align: center;
         vertical-align: middle;
-        width: 1em;
-        height: 1em;
+        width: 1.2em;
+        height: 1.2em;
         display: inline-block;
         cursor: pointer;
-        line-height: 0.9;
         font-weight: bold;
         font-size: 0.9em;
         top: -1px;
+        &.disable{
+          background-color: red;
+        }
       }
     }
   }

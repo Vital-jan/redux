@@ -84,6 +84,7 @@ const Main = (props) => {
         description={props.data[i].txt}
         code={props.data[i].cc}
         rate={props.data[i].rate}
+        key={i}
       />
     );
     console.log(props.data[i]);
@@ -91,24 +92,33 @@ const Main = (props) => {
   return <div className="main">{components}</div>;
 };
 
-const Item = (props) => {
-  const [description, setDescription] = useState(props.description);
-  const [code, setCode] = useState(props.code);
-  const [rate, setRate] = useState(props.rate);
-  const [active, setActive] = useState(false);
+const Enable = (props) => {
+  const content = props.enable ? "+" : "-";
+  const css = props.enable ? "" : "disable";
+  return (
+    <span
+      className={"enable " + css}
+      onClick={() => props.setEnable(!props.enable)}
+    >
+      <span>{content}</span>
+    </span>
+  );
+};
 
-  const Active = (props) => {
-    if (!props.active) return null;
-    return <span>(!)</span>;
-  };
+const Item = (props) => {
+  const [myRate, setMyRate] = useState();
+  const [active, setActive] = useState(false);
+  const [enable, setEnable] = useState(true);
 
   if (!props.admin) {
     // user mode:
+    if (!enable) return null;
     return (
       <div className="item">
-        <span className="item-description"> {description}&nbsp;</span>
-        <span className="item-code">{code}&nbsp;</span>
-        <span className="item-value">{rate}&nbsp;</span>
+        <span className="item-col description"> {props.description}&nbsp;</span>
+        <span className="item-col code">{props.code}&nbsp;</span>
+        <span className="item-col rate">{props.rate}&nbsp;</span>
+        <span className="item-col my-rate">{myRate}&nbsp;</span>
       </div>
     );
   }
@@ -119,35 +129,47 @@ const Item = (props) => {
           &uarr;
         </span>
       ) : null;
+    const css = active ? " active" : "";
+
     return (
       <div className="item-edit">
-        <Active active={active} />
         <input
-          className="input"
-          value={description}
-          onBlur={(e) => {
+          className={"select" + css}
+          value={""}
+          onChange={() => {}}
+          onFocus={(e) => {
             setActive(true);
           }}
-          onFocusOut={(e) => {
+          onBlur={(e) => {
             setActive(false);
           }}
         />
         <input
-          className="input"
-          type="text"
-          value={code}
-          onChange={(e) => {
-            setCode(e.target.value);
-          }}
+          className="input description"
+          value={props.description}
+          onChange={() => {}}
         />
         <input
-          className="input"
+          className="input code"
           type="text"
-          value={rate}
+          value={props.code}
+          onChange={(e) => {}}
+        />
+        <input
+          className="input rate"
+          type="text"
+          value={props.rate}
+          onChange={(e) => {}}
+        />
+        <input
+          className="input my-rate"
+          type="text"
+          value={myRate}
           onChange={(e) => {
-            setRate(e.target.value);
+            setMyRate(e.target.value);
           }}
         />
+        <Enable enable={enable} setEnable={setEnable} />
         {up}
       </div>
     );
