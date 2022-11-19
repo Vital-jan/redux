@@ -1,0 +1,115 @@
+.App {
+  font-family: serif;
+
+  * {
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+
+  .header {
+    text-align: center;
+    margin: 20px 0;
+
+    .admin {
+      border-top: 1px solid gray;
+      border-bottom: 1px solid gray;
+      text-align: center;
+      margin: 10px 0;
+      padding: 10px 0;
+
+      button {
+        margin-right: 10px;
+        cursor: pointer;
+        padding: 0 5px;
+        min-width: 5em;
+      }
+    }
+  }
+
+  .offline {
+    width: 100%;
+    background-color: red;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .main {
+    width: 55%;
+    min-width: 400px;
+
+    @media(max-width: 800px) {
+      width: 80%;
+    }
+
+    @media(max-width: 520px) {
+      width: 98%;
+    }
+
+    margin: auto;
+
+
+    .item {
+
+      margin: 5px 0;
+      height: 1.5em;
+
+      .item-description {
+        display: inline-block;
+        height: 1em;
+        width: 45%;
+        padding: 3px 0 3px 7px;
+        margin-right: 10px;
+        border-radius: 8px;
+        background-color: rgb(201, 211, 224);
+      }
+
+      .item-code {
+        display: inline-block;
+        height: 1em;
+        width: 29%;
+        padding: 3px 0 3px 7px;
+        margin-right: 10px;
+        border-radius: 8px;
+        background-color: rgb(201, 211, 224);
+      }
+
+      .item-value {
+        display: inline-block;
+        height: 1em;
+        width: 29%;
+        padding: 3px 0 3px 7px;
+        margin-right: 10px;
+        border-radius: 8px;
+        background-color: rgb(201, 211, 224);
+      }
+    }
+
+    .item-edit {
+
+      .input {
+        display: inline-block;
+        width: 45%;
+        padding: 1px 2px;
+        margin-right: 5px;
+      }
+
+      .up {
+        background-color: rgb(201, 211, 224);
+        border-radius: 50%;
+        text-align: center;
+        vertical-align: middle;
+        width: 1em;
+        height: 1em;
+        display: inline-block;
+        cursor: pointer;
+        line-height: 0.9;
+        font-weight: bold;
+        font-size: 0.9em;
+        top: -1px;
+      }
+    }
+  }
+}
